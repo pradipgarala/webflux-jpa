@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -16,4 +17,5 @@ public class EmployeeDto {
     private Integer age;
     @Email
     private String email;
+    private Set<Integer> departments;
 }
