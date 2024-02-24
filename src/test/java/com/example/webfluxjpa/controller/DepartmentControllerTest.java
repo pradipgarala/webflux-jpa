@@ -101,8 +101,8 @@ public class DepartmentControllerTest {
     @Test
     void testSaveDepartmentWhenNameLengthIsGreatherThan255() {
         DepartmentDto invalidDto = DepartmentDto.builder()
-                .name("Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.")
-                .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec velit.")
+                .name("lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum")
+                .description("lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem")
                 .build();
 
         webTestClient.post()
@@ -116,8 +116,8 @@ public class DepartmentControllerTest {
     @Test
     void testSaveDepartmentWhenDescriptionLengthIsGreatherThan255() {
         DepartmentDto invalidDto = DepartmentDto.builder()
-                .name("Test Department")
-                .description("Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.")
+                .name("test")
+                .description("lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum")
                 .build();
 
         webTestClient.post()
