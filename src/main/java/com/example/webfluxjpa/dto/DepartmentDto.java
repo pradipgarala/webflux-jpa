@@ -16,5 +16,6 @@ public class DepartmentDto {
     @NotBlank
     @Size(min = 1, max = 255, message = "Department name should be less than 255 characters.")
     private String name;
+    @Size(max = 255, message = "Description should be less than 255 characters.")
     private String description;
 }
