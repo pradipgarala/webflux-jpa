@@ -89,9 +89,9 @@ public class EmployeeControllerTest {
     @Test
     void testSaveEmployeeWhenNameLengthIsGreatherThan255() {
         EmployeeDto invalidDto =  EmployeeDto.builder()
-                .name("Test Length of Employee Name.Test Length of Employee Name.Test Length of Employee Name.Test Length of Employee Name.Test Length of Employee Name.Test Length of Employee Name.Test Length of Employee Name.Test Length of Employee Name.Test Length of Employee Name.")
-                .age(25)
-                .email("a@a.com").build();
+                .name("lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum")
+                .age(90)
+                .email("walter@test.com").build();
 
         webTestClient.post()
                 .uri("/employees")
@@ -105,9 +105,9 @@ public class EmployeeControllerTest {
     @Test
     void testSaveEmployeeWhenEmailIsNotValid() {
         EmployeeDto invalidDto =  EmployeeDto.builder()
-                .name("Employee Name")
-                .age(25)
-                .email("aa.com").build();
+                .name("walter")
+                .age(90)
+                .email("waltertestcom").build();
 
         webTestClient.post()
                 .uri("/employees")
