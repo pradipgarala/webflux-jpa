@@ -1,4 +1,4 @@
-insert into department (name, description) values ('admin', 'admin department');
+insert into department (name, description) values ('account', 'account department');
 insert into department (name, description) values ('engineering', 'engineering department');
 insert into department (name, description) values ('hr', 'hr department');
 
