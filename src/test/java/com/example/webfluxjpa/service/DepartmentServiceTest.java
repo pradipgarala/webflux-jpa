@@ -6,7 +6,6 @@ import com.example.webfluxjpa.entity.Employee;
 import com.example.webfluxjpa.exception.ResourceFoundException;
 import com.example.webfluxjpa.repository.DepartmentRepository;
 import com.example.webfluxjpa.repository.EmployeeRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,9 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
 import reactor.test.StepVerifier;
-import reactor.test.scheduler.VirtualTimeScheduler;
 
 import java.util.Collections;
 
@@ -33,22 +30,11 @@ class DepartmentServiceTest {
     @Mock
     private EmployeeRepository employeeRepository;
 
-//    @Mock
-//    private VirtualTimeScheduler virtualTimeScheduler;
-
-    @Mock
-    private Scheduler jdbcScheduler;
-
     @Mock
     private ModelMapper modelMapper;
 
     @InjectMocks
     private DepartmentService departmentService;
-
-//    @BeforeEach
-//    void setUp() {
-//        VirtualTimeScheduler.set(virtualTimeScheduler);
-//    }
 
     @Test
     void testFindAll() {
@@ -80,6 +66,7 @@ class DepartmentServiceTest {
         DepartmentDto departmentDto = getDepartmentDto();
         Department department = getDepartment();
         when(departmentRepository.save(department)).thenReturn(department);
+        when(modelMapper.map(any(), any())).thenReturn(department);
 
         Mono<Department> departmentMono = departmentService.save(departmentDto);
 

@@ -23,9 +23,4 @@ public class BeanConfig {
 
         return modelMapper;
     }
-
-    @Bean
-    Scheduler jdbcScheduler(Environment env) {
-        return Schedulers.fromExecutor(Executors.newFixedThreadPool(env.getRequiredProperty("jdbc.connection.pool.size", Integer.class)));
-    }
 }

@@ -11,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
 
 @Service
 @RequiredArgsConstructor
@@ -23,11 +22,9 @@ public class DepartmentService {
     private final DepartmentRepository departmentRepository;
     private final EmployeeRepository employeeRepository;
     private final ModelMapper modelMapper;
-    private final Scheduler jdbcScheduler;
 
     public Flux<Department> findAll() {
-        return Flux.defer(() -> Flux.fromIterable(departmentRepository.findAll()))
-                .subscribeOn(jdbcScheduler);
+        return Flux.defer(() -> Flux.fromIterable(departmentRepository.findAll()));
     }
 
     public Mono<Department> findById(Integer id) {

@@ -11,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
@@ -29,11 +28,9 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
     private final ModelMapper modelMapper;
-    private final Scheduler jdbcScheduler;
 
     public Flux<Employee> findAll() {
-        return Flux.defer(() -> Flux.fromIterable(employeeRepository.findAll()))
-                .subscribeOn(jdbcScheduler);
+        return Flux.defer(() -> Flux.fromIterable(employeeRepository.findAll()));
     }
 
     public Mono<Employee> findById(Integer id) {
@@ -75,8 +72,7 @@ public class EmployeeService {
     }
 
     private Mono<Employee> save(Employee entity) {
-        return Mono.defer(() -> Mono.just(employeeRepository.save(entity)))
-                .subscribeOn(jdbcScheduler);
+        return Mono.fromCallable(() -> employeeRepository.save(entity));
     }
 
     public void delete(Integer id) {
