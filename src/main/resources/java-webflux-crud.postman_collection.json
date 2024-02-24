@@ -179,6 +179,26 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "delete - 500",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/departments/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"departments",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
