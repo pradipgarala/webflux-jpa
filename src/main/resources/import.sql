@@ -1,5 +1,6 @@
 insert into department (name, description) values ('admin', 'admin department');
 insert into department (name, description) values ('engineering', 'engineering department');
+insert into department (name, description) values ('hr', 'hr department');
 
 insert into employee (name, age, email) values ('alice', 10, 'alice@test.com');
 insert into employee (name, age, email) values ('bob', 20, 'bob@test.com');
