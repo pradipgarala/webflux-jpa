@@ -2,12 +2,12 @@ package com.example.webfluxjpa.controller;
 
 import com.example.webfluxjpa.dto.DepartmentDto;
 import com.example.webfluxjpa.dto.EmployeeDto;
-import com.example.webfluxjpa.entity.Department;
 import com.example.webfluxjpa.entity.Employee;
+import com.example.webfluxjpa.objectmother.EmployeeDtoMother;
+import com.example.webfluxjpa.objectmother.EmployeeMother;
 import com.example.webfluxjpa.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
@@ -35,11 +35,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void testGetAllEmployees() {
-        Employee employee = Employee.builder()
-                .empId(1)
-                .name("Test Employee")
-                .age(25)
-                .email("a@a.com").build();
+        Employee employee = EmployeeMother.complete().build();
         List<Employee> list = new ArrayList<>();
         list.add(employee);
         Flux<Employee> employeesFlux = Flux.fromIterable(list);
@@ -52,12 +48,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void testGetEmployeeById() {
-        int empId = 1; // Replace with an actual employee ID
-        Employee employee = Employee.builder()
-                .empId(empId)
-                .name("Test Employee")
-                .age(25)
-                .email("a@a.com").build();
+        int empId = 1;
+        Employee employee = EmployeeMother.complete().build();
         when(employeeService.findById(1)).thenReturn(Mono.just(employee));
 
         webTestClient.get().uri("/employees/{empId}", empId)
@@ -68,15 +60,9 @@ public class EmployeeControllerTest {
 
     @Test
     public void testSaveEmployee() {
-        EmployeeDto dto =  EmployeeDto.builder()
-                .name("Test Employee")
-                .age(25)
-                .email("a@a.com").build();
+        EmployeeDto dto = EmployeeDtoMother.complete().build();
+        Employee employee = EmployeeMother.complete().build();
 
-        Employee employee = Employee.builder()
-                .name("Test Employee")
-                .age(25)
-                .email("a@a.com").build();
         when(employeeService.save(dto)).thenReturn(Mono.just(employee));
         webTestClient.post().uri("/employees")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -134,17 +120,11 @@ public class EmployeeControllerTest {
 
     @Test
     public void testUpdateEmployee() {
-        int empId = 1; // Replace with an actual employee ID
-        EmployeeDto dto =  EmployeeDto.builder()
-                .name("Test Employee")
-                .age(25)
-                .email("a@a.com").build();
+        int empId = 1;
+        EmployeeDto dto = EmployeeDtoMother.complete().build();
+        Employee employee = EmployeeMother.complete().build();
 
-        Employee employee = Employee.builder()
-                .name("Test Employee")
-                .age(25)
-                .email("a@a.com").build();
-        when(employeeService.update(empId,dto)).thenReturn(Mono.just(employee));
+        when(employeeService.update(empId, dto)).thenReturn(Mono.just(employee));
         webTestClient.patch().uri("/employees/{empId}", empId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(dto), EmployeeDto.class)
@@ -155,7 +135,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void testDeleteEmployee() {
-        int empId = 1; // Replace with an actual employee ID
+        int empId = 1;
         Mockito.doNothing().when(employeeService).delete(empId);
         webTestClient.delete().uri("/employees/{empId}", empId)
                 .exchange()

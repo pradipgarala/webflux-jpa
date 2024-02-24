@@ -2,15 +2,15 @@ package com.example.webfluxjpa.controller;
 
 import com.example.webfluxjpa.dto.DepartmentDto;
 import com.example.webfluxjpa.entity.Department;
+import com.example.webfluxjpa.objectmother.DepartmentDtoMother;
+import com.example.webfluxjpa.objectmother.DepartmentMother;
 import com.example.webfluxjpa.service.DepartmentService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,10 +44,7 @@ public class DepartmentControllerTest {
 
     @Test
     public void testGetAllDepartments() {
-        Department department = Department.builder()
-                .name("Test")
-                .description("Test Description")
-                .build();
+        Department department = DepartmentMother.complete().build();
         List<Department> list = new ArrayList<>();
         list.add(department);
         Flux<Department> departmentsFlux = Flux.fromIterable(list);
@@ -56,16 +53,13 @@ public class DepartmentControllerTest {
         webTestClient.get().uri("/departments")
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(Department.class).value(departments -> departments.get(0).getName(), CoreMatchers.equalTo("Test"));
+                .expectBodyList(Department.class).value(departments -> departments.get(0).getName(), CoreMatchers.equalTo("account"));
     }
 
     @Test
     public void testGetDepartmentById() {
-        Department department = Department.builder()
-                .name("Test")
-                .description("Test Description")
-                .build();
-        int depId = 1; // Replace with an actual department ID
+        Department department = DepartmentMother.complete().build();
+        int depId = 1;
         when(departmentService.findById(depId)).thenReturn(Mono.just(department));
 
         webTestClient.get().uri("/departments/{depId}", depId)
@@ -76,15 +70,9 @@ public class DepartmentControllerTest {
 
     @Test
     public void testSaveDepartment() {
-        Department department = Department.builder()
-                .name("Test")
-                .description("Test Description")
-                .build();
+        Department department = DepartmentMother.complete().build();
 
-        DepartmentDto dto = DepartmentDto.builder()
-                .name("Test")
-                .description("Test Description")
-                .build();
+        DepartmentDto dto = DepartmentDtoMother.complete().build();
 
         when(departmentService.save(dto)).thenReturn(Mono.just(department));
         webTestClient.post().uri("/departments")
@@ -143,19 +131,13 @@ public class DepartmentControllerTest {
 
     @Test
     public void testUpdateDepartment() {
-        Department department = Department.builder()
-                .name("Test")
-                .description("Test Description")
-                .build();
+        Department department = DepartmentMother.complete().build();
 
-        int depId = 1; // Replace with an actual department ID
+        int depId = 1;
 
-        DepartmentDto dto = DepartmentDto.builder()
-                .name("Test")
-                .description("Test Description")
-                .build();
+        DepartmentDto dto = DepartmentDtoMother.complete().build();
 
-        when(departmentService.update(depId,dto)).thenReturn(Mono.just(department));
+        when(departmentService.update(depId, dto)).thenReturn(Mono.just(department));
 
         webTestClient.patch().uri("/departments/{depId}", depId)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -167,7 +149,7 @@ public class DepartmentControllerTest {
 
     @Test
     public void testDeleteDepartment() {
-        int depId = 1; // Replace with an actual department ID
+        int depId = 1;
         Mockito.doNothing().when(departmentService).delete(depId);
         webTestClient.delete().uri("/departments/{depId}", depId)
                 .exchange()
