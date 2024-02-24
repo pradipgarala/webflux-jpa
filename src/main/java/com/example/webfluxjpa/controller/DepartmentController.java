@@ -4,6 +4,7 @@ import com.example.webfluxjpa.dto.DepartmentDto;
 import com.example.webfluxjpa.entity.Department;
 import com.example.webfluxjpa.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -13,10 +14,14 @@ import javax.validation.Valid;
 @Validated
 @RestController
 @RequestMapping("/departments")
-@RequiredArgsConstructor
 public class DepartmentController {
 
     private final DepartmentService departmentService;
+
+    @Autowired
+    public DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
+    }
 
     @GetMapping
     Flux<Department> getAll() {

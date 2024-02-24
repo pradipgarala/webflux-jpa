@@ -8,12 +8,12 @@ import com.example.webfluxjpa.repository.DepartmentRepository;
 import com.example.webfluxjpa.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-@RequiredArgsConstructor
 public class DepartmentService {
 
     private static final String DEPARTMENT_NOT_FOUND = "Department not found";
@@ -22,6 +22,13 @@ public class DepartmentService {
     private final DepartmentRepository departmentRepository;
     private final EmployeeRepository employeeRepository;
     private final ModelMapper modelMapper;
+
+    @Autowired
+    public DepartmentService(DepartmentRepository departmentRepository, EmployeeRepository employeeRepository, ModelMapper modelMapper) {
+        this.departmentRepository = departmentRepository;
+        this.employeeRepository = employeeRepository;
+        this.modelMapper = modelMapper;
+    }
 
     public Flux<Department> findAll() {
         return Flux.defer(() -> Flux.fromIterable(departmentRepository.findAll()));

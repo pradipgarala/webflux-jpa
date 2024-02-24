@@ -4,6 +4,7 @@ import com.example.webfluxjpa.dto.EmployeeDto;
 import com.example.webfluxjpa.entity.Employee;
 import com.example.webfluxjpa.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -14,10 +15,14 @@ import javax.validation.Valid;
 @Validated
 @RestController
 @RequestMapping("/employees")
-@RequiredArgsConstructor
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+
+    @Autowired
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @GetMapping
     Flux<Employee> getAll() {

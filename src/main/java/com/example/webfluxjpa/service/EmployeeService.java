@@ -8,6 +8,7 @@ import com.example.webfluxjpa.repository.DepartmentRepository;
 import com.example.webfluxjpa.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -19,7 +20,6 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
 public class EmployeeService {
 
@@ -29,6 +29,13 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
     private final ModelMapper modelMapper;
+
+    @Autowired
+    public EmployeeService(EmployeeRepository employeeRepository, DepartmentRepository departmentRepository, ModelMapper modelMapper) {
+        this.employeeRepository = employeeRepository;
+        this.departmentRepository = departmentRepository;
+        this.modelMapper = modelMapper;
+    }
 
     public Flux<Employee> findAll() {
         return Flux.defer(() -> Flux.fromIterable(employeeRepository.findAll()));
