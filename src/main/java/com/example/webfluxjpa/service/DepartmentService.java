@@ -1,0 +1,67 @@
+package com.example.webfluxjpa.service;
+
+import com.example.webfluxjpa.dto.DepartmentDto;
+import com.example.webfluxjpa.entity.Department;
+import com.example.webfluxjpa.exception.ResourceFoundException;
+import com.example.webfluxjpa.exception.ResourceNotFoundException;
+import com.example.webfluxjpa.repository.DepartmentRepository;
+import com.example.webfluxjpa.repository.EmployeeRepository;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
+
+@Service
+@RequiredArgsConstructor
+public class DepartmentService {
+
+    private static final String DEPARTMENT_NOT_FOUND = "Department not found";
+    private static final String EMPLOYEE_EXIST = "Department can't be deleted, Employee exist";
+
+    private final DepartmentRepository departmentRepository;
+    private final EmployeeRepository employeeRepository;
+    private final ModelMapper modelMapper;
+    private final Scheduler jdbcScheduler;
+
+    public Flux<Department> findAll() {
+        return Flux.defer(() -> Flux.fromIterable(departmentRepository.findAll()))
+                .subscribeOn(jdbcScheduler);
+    }
+
+    public Mono<Department> findById(Integer id) {
+        return Mono.defer(() -> Mono.just(departmentRepository.findById(id)))
+                .subscribeOn(jdbcScheduler)
+                .flatMap(o -> o.<Mono<? extends Department>>map(Mono::just).orElseGet(Mono::empty));
+    }
+
+    public Mono<Department> save(DepartmentDto dto) {
+        Department entity = modelMapper.map(dto, Department.class);
+        return save(entity);
+    }
+
+    public Mono<Department> update(Integer id, DepartmentDto dto) {
+        Department entity = departmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(DEPARTMENT_NOT_FOUND));
+
+        modelMapper.map(dto, entity);
+
+        return save(entity);
+    }
+
+    private Mono<Department> save(Department entity) {
+        return Mono.defer(() -> Mono.just(departmentRepository.save(entity)))
+                .subscribeOn(jdbcScheduler);
+    }
+
+    public void delete(Integer id) {
+        employeeRepository.findByDepartmentsDepId(id).stream()
+                .findAny()
+                .ifPresent(e -> {
+                    throw new ResourceFoundException(EMPLOYEE_EXIST);
+                });
+
+        departmentRepository.deleteById(id);
+    }
+}

@@ -1,0 +1,4 @@
+jdbc:
+  connection:
+    pool:
+      size: 5
