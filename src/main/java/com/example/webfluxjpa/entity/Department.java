@@ -1,9 +1,11 @@
 package com.example.webfluxjpa.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @Getter

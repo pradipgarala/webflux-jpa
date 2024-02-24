@@ -3,11 +3,12 @@ package com.example.webfluxjpa.controller;
 import com.example.webfluxjpa.dto.DepartmentDto;
 import com.example.webfluxjpa.entity.Department;
 import com.example.webfluxjpa.service.DepartmentService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/departments")
