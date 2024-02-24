@@ -55,7 +55,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"hr\"\n}",
+							"raw": "{\n    \"name\": \"test\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -111,7 +111,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"hr\",\n    \"description\": \"hr department\"\n}",
+							"raw": "{\n    \"name\": \"admin\",\n    \"description\": \"admin department\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
