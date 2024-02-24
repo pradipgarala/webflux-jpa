@@ -38,8 +38,7 @@ public class DepartmentService {
     }
 
     public Mono<Department> update(Integer id, DepartmentDto dto) {
-        Department entity = departmentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(DEPARTMENT_NOT_FOUND));
+        Department entity = getEntityOrThrowException(id);
 
         modelMapper.map(dto, entity);
 
@@ -51,6 +50,8 @@ public class DepartmentService {
     }
 
     public void delete(Integer id) {
+        getEntityOrThrowException(id);
+
         employeeRepository.findByDepartmentsDepId(id).stream()
                 .findAny()
                 .ifPresent(e -> {
@@ -58,5 +59,10 @@ public class DepartmentService {
                 });
 
         departmentRepository.deleteById(id);
+    }
+
+    private Department getEntityOrThrowException(Integer id) {
+        return departmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(DEPARTMENT_NOT_FOUND));
     }
 }

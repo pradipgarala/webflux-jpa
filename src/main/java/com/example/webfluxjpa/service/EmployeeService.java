@@ -24,6 +24,7 @@ import java.util.Set;
 public class EmployeeService {
 
     private static final String EMPLOYEE_NOT_FOUND = "Employee not found";
+    private static final String DEPARTMENT_NOT_FOUND = "Department(s) not found";
 
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
@@ -46,8 +47,7 @@ public class EmployeeService {
 
 
     public Mono<Employee> update(Integer id, EmployeeDto dto) {
-        Employee entity = employeeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(EMPLOYEE_NOT_FOUND));
+        Employee entity = getEntityOrThrowException(id);
 
         modelMapper.map(dto, entity);
         validateDepartment(dto, entity);
@@ -65,7 +65,7 @@ public class EmployeeService {
                 .orElseGet(() -> 0);
 
         if (inputSize != departmentList.size()) {
-            throw new ResourceNotFoundException("Department(s) not found");
+            throw new ResourceNotFoundException(DEPARTMENT_NOT_FOUND);
         }
 
         entity.setDepartments(departmentList);
@@ -76,6 +76,12 @@ public class EmployeeService {
     }
 
     public void delete(Integer id) {
+        getEntityOrThrowException(id);
         employeeRepository.deleteById(id);
+    }
+
+    private Employee getEntityOrThrowException(Integer id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(EMPLOYEE_NOT_FOUND));
     }
 }

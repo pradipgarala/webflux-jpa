@@ -4,6 +4,8 @@ import com.example.webfluxjpa.dto.DepartmentDto;
 import com.example.webfluxjpa.entity.Department;
 import com.example.webfluxjpa.entity.Employee;
 import com.example.webfluxjpa.exception.ResourceFoundException;
+import com.example.webfluxjpa.objectmother.DepartmentDtoMother;
+import com.example.webfluxjpa.objectmother.DepartmentMother;
 import com.example.webfluxjpa.repository.DepartmentRepository;
 import com.example.webfluxjpa.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
@@ -17,7 +19,9 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.Collections;
+import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -38,7 +42,7 @@ class DepartmentServiceTest {
 
     @Test
     void testFindAll() {
-        Department department = getDepartment();
+        Department department = DepartmentMother.complete().build();
         when(departmentRepository.findAll()).thenReturn(Collections.singletonList(department));
 
         Flux<Department> departmentFlux = departmentService.findAll();
@@ -50,9 +54,9 @@ class DepartmentServiceTest {
 
     @Test
     void testFindById() {
-        Department department = getDepartment();
+        Department department = DepartmentMother.complete().build();
         int id = 1;
-        when(departmentRepository.findById(id)).thenReturn(java.util.Optional.of(department));
+        when(departmentRepository.findById(id)).thenReturn(Optional.of(department));
 
         Mono<Department> departmentMono = departmentService.findById(id);
 
@@ -63,8 +67,8 @@ class DepartmentServiceTest {
 
     @Test
     void testSave() {
-        DepartmentDto departmentDto = getDepartmentDto();
-        Department department = getDepartment();
+        DepartmentDto departmentDto = DepartmentDtoMother.complete().build();
+        Department department = DepartmentMother.complete().build();
         when(departmentRepository.save(department)).thenReturn(department);
         when(modelMapper.map(any(), any())).thenReturn(department);
 
@@ -77,10 +81,10 @@ class DepartmentServiceTest {
 
     @Test
     void testUpdate() {
-        DepartmentDto departmentDto = getDepartmentDto();
-        Department department = getDepartment();
+        DepartmentDto departmentDto = DepartmentDtoMother.complete().build();
+        Department department = DepartmentMother.complete().build();
         int id = 1;
-        when(departmentRepository.findById(id)).thenReturn(java.util.Optional.of(department));
+        when(departmentRepository.findById(id)).thenReturn(Optional.of(department));
         when(departmentRepository.save(any(Department.class))).thenReturn(department);
 
         Mono<Department> departmentMono = departmentService.update(id, departmentDto);
@@ -88,6 +92,16 @@ class DepartmentServiceTest {
         StepVerifier.create(departmentMono)
                 .expectNext(department)
                 .verifyComplete();
+    }
+
+    @Test
+    void testUpdateThrowsException() {
+        DepartmentDto departmentDto = DepartmentDtoMother.complete().build();
+        int id = 1;
+        when(departmentRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> departmentService.update(id, departmentDto))
+                .hasMessage("Department not found");
     }
 
     @Test
@@ -108,22 +122,5 @@ class DepartmentServiceTest {
         assertThrows(ResourceFoundException.class, () -> departmentService.delete(id));
 
         verify(departmentRepository, never()).deleteById(anyInt());
-    }
-
-    private Department getDepartment() {
-        Department entity = new Department();
-        entity.setDepId(1);
-        entity.setName("test");
-        entity.setDescription("desc");
-
-        return entity;
-    }
-
-    private DepartmentDto getDepartmentDto() {
-        DepartmentDto dto = new DepartmentDto();
-        dto.setName("test");
-        dto.setDescription("desc");
-
-        return dto;
     }
 }
