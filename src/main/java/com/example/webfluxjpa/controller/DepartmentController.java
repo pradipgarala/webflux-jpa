@@ -3,6 +3,7 @@ package com.example.webfluxjpa.controller;
 import com.example.webfluxjpa.dto.DepartmentDto;
 import com.example.webfluxjpa.entity.Department;
 import com.example.webfluxjpa.service.DepartmentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -16,6 +17,7 @@ public class DepartmentController {
 
     private final DepartmentService departmentService;
 
+    @Autowired
     public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
     }

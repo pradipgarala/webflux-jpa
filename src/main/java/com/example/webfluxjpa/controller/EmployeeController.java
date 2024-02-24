@@ -3,6 +3,7 @@ package com.example.webfluxjpa.controller;
 import com.example.webfluxjpa.dto.EmployeeDto;
 import com.example.webfluxjpa.entity.Employee;
 import com.example.webfluxjpa.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -17,6 +18,7 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
+    @Autowired
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }

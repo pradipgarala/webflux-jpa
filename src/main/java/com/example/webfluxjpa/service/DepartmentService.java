@@ -6,7 +6,9 @@ import com.example.webfluxjpa.exception.ResourceFoundException;
 import com.example.webfluxjpa.exception.ResourceNotFoundException;
 import com.example.webfluxjpa.repository.DepartmentRepository;
 import com.example.webfluxjpa.repository.EmployeeRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -21,6 +23,7 @@ public class DepartmentService {
     private final EmployeeRepository employeeRepository;
     private final ModelMapper modelMapper;
 
+    @Autowired
     public DepartmentService(DepartmentRepository departmentRepository, EmployeeRepository employeeRepository, ModelMapper modelMapper) {
         this.departmentRepository = departmentRepository;
         this.employeeRepository = employeeRepository;
