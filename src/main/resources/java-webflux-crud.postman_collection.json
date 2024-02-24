@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "f98ab463-1d7c-4ff4-a927-4f73b1413b7e",
-		"name": "web-flux",
+		"name": "java-webflux-crud",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "32092533"
 	},
@@ -210,7 +210,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/employees/3",
+							"raw": "http://localhost:8080/employees/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -218,7 +218,7 @@
 							"port": "8080",
 							"path": [
 								"employees",
-								"3"
+								"1"
 							]
 						}
 					},
@@ -231,7 +231,35 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"walter\",\n    \"age\": 90,\n    \"email\": \"walter@test.com\"\n}",
+							"raw": "{\n    \"name\": \"walter\",\n    \"age\": 90,\n    \"email\": \"walter@test.com\",\n    \"departments\": [1, 2]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save - invalid departments",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"walter\",\n    \"age\": 90,\n    \"email\": \"walter@test.com\",\n    \"departments\": [99]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -259,6 +287,64 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\",\n    \"age\": 10,\n    \"email\": \"alice@test.com\",\n    \"departments\": [2]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/employees/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"employees",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update - invalid departments",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\",\n    \"age\": 10,\n    \"email\": \"alice@test.com\",\n    \"departments\": [99]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/employees/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"employees",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update - 404",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
 							"raw": "{\n    \"name\": \"test\",\n    \"age\": 10,\n    \"email\": \"alice@test.com\"\n}",
 							"options": {
 								"raw": {
@@ -280,28 +366,28 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/employees/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"employees",
+								"3"
+							]
+						}
+					},
+					"response": []
 				}
 			]
-		},
-		{
-			"name": "delete",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/employees/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"employees",
-						"1"
-					]
-				}
-			},
-			"response": []
 		}
 	]
 }

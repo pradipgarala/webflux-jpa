@@ -1,7 +1,13 @@
+# Java Webflux CRUD Application: Department and Employee Management
+
 # TODO
 - @Valid @RequestBody - custom message
-- insert employee
 - test cases
+
+## HomePage : http://localhost:8080/
+
+## postman-collection
+        /resources/web-flux.postman_collection.json
 
 ### Sample Data
 
@@ -27,13 +33,3 @@
 | 2 (bob)     | 2 (engineering) |
 | 3 (charlie) | 2 (account)     |
 | 3 (charlie) | 2 (engineering) |
-
-
-* The original package name 'com.example.web-flux' is invalid and this project uses 'com.example.webflux' instead.
-
-# Getting Started
-
-### Reference Documentation
-For further reference, please consider the following sections:
-
-* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/3.1.8/reference/htmlsingle/index.html#data.sql.jpa-and-spring-data)
