@@ -3,7 +3,7 @@
 ## HomePage : http://localhost:8080/
 
 ## postman-collection
-        /resources/web-flux.postman_collection.json
+        /resources/java-webflux-crud.postman_collection.json
 
 ### Sample Data
 
@@ -21,6 +21,7 @@
 | 1  | alice   | 30  | alice@web.com   |
 | 2  | bob     | 40  | bob@web.com     |
 | 3  | charlie | 50  | charlie@web.com |
+
 
 #### Employee_Department
 | emp_id      | dep_id          |
