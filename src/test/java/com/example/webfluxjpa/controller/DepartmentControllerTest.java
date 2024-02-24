@@ -101,8 +101,8 @@ public class DepartmentControllerTest {
     @Test
     void testSaveDepartmentWhenNameLengthIsGreatherThan255() {
         DepartmentDto invalidDto = DepartmentDto.builder()
-                .name("lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum")
-                .description("lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem")
+                .name("Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.")
+                .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec velit.")
                 .build();
 
         webTestClient.post()
@@ -116,8 +116,8 @@ public class DepartmentControllerTest {
     @Test
     void testSaveDepartmentWhenDescriptionLengthIsGreatherThan255() {
         DepartmentDto invalidDto = DepartmentDto.builder()
-                .name("test")
-                .description("lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum")
+                .name("Test Department")
+                .description("Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.")
                 .build();
 
         webTestClient.post()
