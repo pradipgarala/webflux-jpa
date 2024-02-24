@@ -85,7 +85,7 @@ public class DepartmentControllerTest {
     @Test
     void testSaveDepartmentWhenNameIsBlank() {
         DepartmentDto invalidDto = DepartmentDto.builder()
-                .name("")
+                .name(" ")
                 .description("Marketing")
                 .build();
 
