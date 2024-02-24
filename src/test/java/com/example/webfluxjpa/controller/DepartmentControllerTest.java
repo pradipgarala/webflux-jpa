@@ -12,14 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.mockito.Mockito.when;
 
@@ -33,6 +39,8 @@ public class DepartmentControllerTest {
 
     @Autowired
     private WebTestClient webTestClient;
+
+    private final Validator validator = new LocalValidatorFactoryBean();
 
     @Test
     public void testGetAllDepartments() {
@@ -84,6 +92,53 @@ public class DepartmentControllerTest {
                 .body(Mono.just(dto), DepartmentDto.class)
                 .exchange()
                 .expectBody(Department.class);
+    }
+
+    @Test
+    void testSaveDepartmentWhenNameIsBlank() {
+        DepartmentDto invalidDto = DepartmentDto.builder()
+                .name("")
+                .description("Marketing")
+                .build();
+
+        webTestClient.post()
+                .uri("/departments")
+                .body(Mono.just(invalidDto), DepartmentDto.class)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody()
+                .jsonPath("name").isEqualTo("must not be blank");
+    }
+
+    @Test
+    void testSaveDepartmentWhenNameLengthIsGreatherThan255() {
+        DepartmentDto invalidDto = DepartmentDto.builder()
+                .name("Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.")
+                .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec velit.")
+                .build();
+
+        webTestClient.post()
+                .uri("/departments")
+                .body(Mono.just(invalidDto), DepartmentDto.class)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody()
+                .jsonPath("name").isEqualTo("Department name should be less than 255 characters.");
+    }
+    @Test
+    void testSaveDepartmentWhenDescriptionLengthIsGreatherThan255() {
+        DepartmentDto invalidDto = DepartmentDto.builder()
+                .name("Test Department")
+                .description("Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.")
+                .build();
+
+        webTestClient.post()
+                .uri("/departments")
+                .body(Mono.just(invalidDto), DepartmentDto.class)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody()
+                .jsonPath("description").isEqualTo("Description should be less than 255 characters.");
     }
 
     @Test

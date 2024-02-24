@@ -1,5 +1,6 @@
 package com.example.webfluxjpa.controller;
 
+import com.example.webfluxjpa.dto.DepartmentDto;
 import com.example.webfluxjpa.dto.EmployeeDto;
 import com.example.webfluxjpa.entity.Department;
 import com.example.webfluxjpa.entity.Employee;
@@ -82,6 +83,53 @@ public class EmployeeControllerTest {
                 .body(Mono.just(dto), EmployeeDto.class)
                 .exchange()
                 .expectBody(Employee.class);
+    }
+
+    @Test
+    void testSaveEmployeeWhenNameIsBlank() {
+        EmployeeDto invalidDto =  EmployeeDto.builder()
+                .age(25)
+                .email("a@a.com").build();
+
+        webTestClient.post()
+                .uri("/employees")
+                .body(Mono.just(invalidDto), EmployeeDto.class)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody()
+                .jsonPath("name").isEqualTo("must not be blank");
+    }
+
+    @Test
+    void testSaveEmployeeWhenNameLengthIsGreatherThan255() {
+        EmployeeDto invalidDto =  EmployeeDto.builder()
+                .name("Test Length of Employee Name.Test Length of Employee Name.Test Length of Employee Name.Test Length of Employee Name.Test Length of Employee Name.Test Length of Employee Name.Test Length of Employee Name.Test Length of Employee Name.Test Length of Employee Name.")
+                .age(25)
+                .email("a@a.com").build();
+
+        webTestClient.post()
+                .uri("/employees")
+                .body(Mono.just(invalidDto), EmployeeDto.class)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody()
+                .jsonPath("name").isEqualTo("Employee name should be less than 255 characters.");
+    }
+
+    @Test
+    void testSaveEmployeeWhenEmailIsNotValid() {
+        EmployeeDto invalidDto =  EmployeeDto.builder()
+                .name("Employee Name")
+                .age(25)
+                .email("aa.com").build();
+
+        webTestClient.post()
+                .uri("/employees")
+                .body(Mono.just(invalidDto), EmployeeDto.class)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody()
+                .jsonPath("email").isEqualTo("must be a well-formed email address");
     }
 
     @Test
