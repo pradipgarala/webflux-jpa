@@ -31,9 +31,8 @@ public class DepartmentService {
     }
 
     public Mono<Department> findById(Integer id) {
-        return Mono.defer(() -> Mono.just(departmentRepository.findById(id)))
-                .subscribeOn(jdbcScheduler)
-                .flatMap(o -> o.<Mono<? extends Department>>map(Mono::just).orElseGet(Mono::empty));
+        return Mono.fromCallable(() -> departmentRepository.findById(id))
+                .flatMap(Mono::justOrEmpty);
     }
 
     public Mono<Department> save(DepartmentDto dto) {
@@ -51,8 +50,7 @@ public class DepartmentService {
     }
 
     private Mono<Department> save(Department entity) {
-        return Mono.defer(() -> Mono.just(departmentRepository.save(entity)))
-                .subscribeOn(jdbcScheduler);
+        return Mono.fromCallable(() -> departmentRepository.save(entity));
     }
 
     public void delete(Integer id) {

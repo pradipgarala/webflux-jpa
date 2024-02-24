@@ -37,9 +37,8 @@ public class EmployeeService {
     }
 
     public Mono<Employee> findById(Integer id) {
-        return Mono.defer(() -> Mono.just(employeeRepository.findById(id)))
-                .subscribeOn(jdbcScheduler)
-                .flatMap(o -> o.<Mono<? extends Employee>>map(Mono::just).orElseGet(Mono::empty));
+        return Mono.fromCallable(() -> employeeRepository.findById(id))
+                .flatMap(Mono::justOrEmpty);
     }
 
     public Mono<Employee> save(EmployeeDto dto) {
