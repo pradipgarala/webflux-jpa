@@ -117,7 +117,9 @@ class EmployeeServiceTest {
 
     @Test
     void testDelete() {
+        Employee employee = EmployeeMother.complete().build();
         int id = 1;
+        when(employeeRepository.findById(id)).thenReturn(Optional.of(employee));
 
         employeeService.delete(id);
 

@@ -107,6 +107,7 @@ class DepartmentServiceTest {
     @Test
     void testDelete() {
         int id = 1;
+        when(departmentRepository.findById(id)).thenReturn(Optional.of(DepartmentMother.complete().build()));
         when(employeeRepository.findByDepartmentsDepId(id)).thenReturn(Collections.emptyList());
 
         departmentService.delete(id);
@@ -117,6 +118,7 @@ class DepartmentServiceTest {
     @Test
     void testDeleteWithEmployees() {
         int id = 1;
+        when(departmentRepository.findById(id)).thenReturn(Optional.of(DepartmentMother.complete().build()));
         when(employeeRepository.findByDepartmentsDepId(id)).thenReturn(Collections.singletonList(new Employee()));
 
         assertThrows(ResourceFoundException.class, () -> departmentService.delete(id));
