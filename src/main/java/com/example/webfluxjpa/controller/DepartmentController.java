@@ -4,12 +4,13 @@ import com.example.webfluxjpa.dto.DepartmentDto;
 import com.example.webfluxjpa.entity.Department;
 import com.example.webfluxjpa.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
-
+@Validated
 @RestController
 @RequestMapping("/departments")
 @RequiredArgsConstructor
