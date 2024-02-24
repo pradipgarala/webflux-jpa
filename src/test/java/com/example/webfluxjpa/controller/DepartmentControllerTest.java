@@ -101,7 +101,7 @@ public class DepartmentControllerTest {
     @Test
     void testSaveDepartmentWhenNameLengthIsGreatherThan255() {
         DepartmentDto invalidDto = DepartmentDto.builder()
-                .name("lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum")
+                .name("Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.")
                 .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec velit.")
                 .build();
 
@@ -117,7 +117,7 @@ public class DepartmentControllerTest {
     void testSaveDepartmentWhenDescriptionLengthIsGreatherThan255() {
         DepartmentDto invalidDto = DepartmentDto.builder()
                 .name("Test Department")
-                .description("Tlorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum")
+                .description("Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.Test Length of Department Name.")
                 .build();
 
         webTestClient.post()
