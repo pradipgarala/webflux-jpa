@@ -1,4 +1,4 @@
-# Java Webflux CRUD Application: Department and Employee Management
+# Java WebFlux CRUD Application: Department and Employee Management
 
 ## HomePage : http://localhost:8080/
 
