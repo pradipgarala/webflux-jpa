@@ -30,3 +30,15 @@
 | 2 (bob)     | 2 (engineering) |
 | 3 (charlie) | 2 (account)     |
 | 3 (charlie) | 2 (engineering) |
+
+### Techstack
+- Spring Boot
+- WebFlux
+- Spring Data JPA
+- H2
+- Spring Boot Validation
+- ModelMapper
+- Lombok
+- Maven
+- Reactor Test
+- JUnit 5
