@@ -18,9 +18,9 @@
 #### Employee
 | id | name    | age | email           |
 |----|---------|-----|-----------------|
-| 1  | alice   | 30  | alice@web.com   |
-| 2  | bob     | 40  | bob@web.com     |
-| 3  | charlie | 50  | charlie@web.com |
+| 1  | alice   | 30  | alice@test.com   |
+| 2  | bob     | 40  | bob@test.com     |
+| 3  | charlie | 50  | charlie@test.com |
 
 
 #### Employee_Department
